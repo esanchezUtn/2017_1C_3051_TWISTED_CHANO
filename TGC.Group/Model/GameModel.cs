@@ -224,7 +224,7 @@ namespace TGC.Group.Model
             {
                 listaJugadores.Add(new Jugador("gris", MediaDir, 1));
                 this.listaJugadores[1].claseAuto.SetMesh(loader.loadSceneFromFile(MediaDir + "Vehiculos\\AutoGris\\Auto-TgcScene.xml").Meshes[0]);
-                this.listaJugadores[1].claseAuto.SetPositionMesh(new Vector3((-1) * (POSICION_VERTICE - CUADRANTE_SIZE * 4), 0, (POSICION_VERTICE - CUADRANTE_SIZE * 4)), false);
+                this.listaJugadores[1].claseAuto.SetPositionMesh(new Vector3(100, 0, 100), false);
                 this.listaJugadores[1].claseAuto.SetRuedas(loader);
                 this.listaJugadores[1].CreateCamera();
                 GameModel.MeshAutos.Add(this.listaJugadores[1].claseAuto.GetMesh());
@@ -359,6 +359,7 @@ namespace TGC.Group.Model
         public override void Update()
         {
             bool MoverRuedas = false, Avanzar = false, Frenar = false, Izquierda = false, Derecha = false, Saltar = false;
+            bool AvanzarIA = false;
 
             PreUpdate();
 
@@ -405,6 +406,11 @@ namespace TGC.Group.Model
                     Avanzar = true;
                 }
 
+                if ((Input.keyDown(Key.Q)))
+                {
+                    AvanzarIA = true;
+                }
+
                 if (Input.keyDown(Key.Left) || Input.keyDown(Key.A))
                 {
                     Izquierda = true;
@@ -446,7 +452,7 @@ namespace TGC.Group.Model
                     {
                         //IA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
                         //unJugador.Update(ElapsedTime);
-                        unJugador.Update(false, false, false, false, false, false, ElapsedTime);
+                        unJugador.Update(false, AvanzarIA, false, false, false, false, ElapsedTime);
                     }
                 }
                 

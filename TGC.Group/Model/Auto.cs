@@ -179,7 +179,7 @@ namespace TGC.Group.Model
 
         public void SetPositionMesh(Vector3 unVector, bool rotar)
         {
-            this.Mesh.AutoTransformEnable = false;
+            this.Mesh.AutoTransformEnable = true;
             this.Mesh.AutoUpdateBoundingBox = true;
 
             if (rotar)
@@ -192,8 +192,9 @@ namespace TGC.Group.Model
 
             //Cargo el bouding box obb del auto a partir de su AABB
             this.ObbMesh = TgcBoundingOrientedBox.computeFromAABB(this.Mesh.BoundingBox);
-            this.Mesh.Position = unVector;
-            
+
+            this.Mesh.Position=unVector;
+
             /*this.Mesh.AutoTransformEnable = true;
             this.Mesh.move(unVector);
             this.Mesh.UpdateMeshTransform();
@@ -471,23 +472,42 @@ namespace TGC.Group.Model
                 if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
                 {
                     this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
-                    this.colisionSimple(elapsedTime, 1); //esto esta medio harcodeado pero dejarlo asi por ahora
+                    this.colisionSimple(elapsedTime, 2); //esto esta medio harcodeado pero dejarlo asi por ahora
                 }
                 else
                 {
                     this.colisionSimple(elapsedTime, moveFoward);
                 }
+                return;
              
             }
 
             if (TgcCollisionUtils.testObbObb(this.ObbArribaDer.toStruct(), unAuto.ObbMesh.toStruct()))
             {
-                
+                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                {
+                    this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
+                    this.colisionSimpleCostados(elapsedTime, 2, -1000f); 
+                }
+                else
+                {
+                    this.colisionSimpleCostados(elapsedTime, moveFoward, -1000f);
+                }
+                return;
             }
 
             if (TgcCollisionUtils.testObbObb(this.ObbArribaIzq.toStruct(), unAuto.ObbMesh.toStruct()))
             {
-
+                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                {
+                    this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
+                    this.colisionSimpleCostados(elapsedTime, 2, 1000f);
+                }
+                else
+                {
+                    this.colisionSimpleCostados(elapsedTime, moveFoward, 1000f);
+                }
+                return;
             }
 
             if (TgcCollisionUtils.testObbObb(this.ObbAbajo.toStruct(), unAuto.ObbMesh.toStruct()))
@@ -496,6 +516,13 @@ namespace TGC.Group.Model
             }
 
 
+        }
+
+        private void colisionSimpleCostados(float elapsedTime, float movefoward, float orientacion)
+        {
+            this.rotAngle = (this.MOVEMENT_SPEED * 0.2f * Math.Sign(orientacion) * elapsedTime) * (FastMath.PI / 50);
+            this.Mesh.rotateY(rotAngle);
+            this.ObbMesh.rotate(new Vector3(0, rotAngle, 0));
         }
 
         private float AnguloEntreVectores(Vector3 vector1, Vector3 vector2)

@@ -464,7 +464,7 @@ namespace TGC.Group.Model
             //No colisiono nada
             return false;
         }
-
+       
         private void respuestaColisionAutovsAuto(Auto unAuto, float elapsedTime, float moveFoward)
         {
            if(TgcCollisionUtils.testObbObb(this.ObbArriba.toStruct(), unAuto.ObbMesh.toStruct()))
@@ -484,15 +484,16 @@ namespace TGC.Group.Model
 
             if (TgcCollisionUtils.testObbObb(this.ObbArribaDer.toStruct(), unAuto.ObbMesh.toStruct()))
             {
-                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                if ((Math.Truncate(this.MOVEMENT_SPEED)) == 0 )
                 {
                     this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
-                    this.colisionSimpleCostados(elapsedTime, 2, -1000f); 
+                    this.colisionSimpleCostados(elapsedTime, -1); 
                 }
                 else
                 {
-                    this.colisionSimpleCostados(elapsedTime, moveFoward, -1000f);
+                    this.colisionSimpleCostados(elapsedTime, -1);
                 }
+                this.pesoImpacto = 5;
                 return;
             }
 
@@ -501,26 +502,69 @@ namespace TGC.Group.Model
                 if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
                 {
                     this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
-                    this.colisionSimpleCostados(elapsedTime, 2, 1000f);
+                    this.colisionSimpleCostados(elapsedTime,  1);
                 }
                 else
                 {
-                    this.colisionSimpleCostados(elapsedTime, moveFoward, 1000f);
+                    this.colisionSimpleCostados(elapsedTime, 1);
                 }
+                this.pesoImpacto = 5;
                 return;
             }
 
             if (TgcCollisionUtils.testObbObb(this.ObbAbajo.toStruct(), unAuto.ObbMesh.toStruct()))
             {
+                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                {
+                    this.MOVEMENT_SPEED -= unAuto.MOVEMENT_SPEED;
+                    this.colisionSimple(elapsedTime, 2); 
 
+                }
+                else
+                {
+                    this.colisionSimple(elapsedTime, moveFoward);
+                }
+                this.pesoImpacto = 5;
+                return;
+
+            }
+
+            if (TgcCollisionUtils.testObbObb(this.ObbAbajoIzq.toStruct(), unAuto.ObbMesh.toStruct()))
+            {
+                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                {
+                    this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
+                    this.colisionSimpleCostados(elapsedTime, -1);
+                }
+                else
+                {
+                    this.colisionSimpleCostados(elapsedTime, -1);
+                }
+                this.pesoImpacto = 5;
+                return;
+            }
+
+            if (TgcCollisionUtils.testObbObb(this.ObbAbajoDer.toStruct(), unAuto.ObbMesh.toStruct()))
+            {
+                if (Math.Truncate(this.MOVEMENT_SPEED) == 0)
+                {
+                    this.MOVEMENT_SPEED += unAuto.MOVEMENT_SPEED;
+                    this.colisionSimpleCostados(elapsedTime, 1);
+                }
+                else
+                {
+                    this.colisionSimpleCostados(elapsedTime, 1);
+                }
+                this.pesoImpacto = 5;
+                return;
             }
 
 
         }
 
-        private void colisionSimpleCostados(float elapsedTime, float movefoward, float orientacion)
+        private void colisionSimpleCostados(float elapsedTime, float orientacion)
         {
-            this.rotAngle = (this.MOVEMENT_SPEED * 0.2f * Math.Sign(orientacion) * elapsedTime) * (FastMath.PI / 50);
+            this.rotAngle = (this.MOVEMENT_SPEED * 1f * Math.Sign(orientacion) * elapsedTime) * (FastMath.PI / 50);
             this.Mesh.rotateY(rotAngle);
             this.ObbMesh.rotate(new Vector3(0, rotAngle, 0));
         }

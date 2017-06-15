@@ -82,6 +82,11 @@ namespace TGC.Group.Model
             this.NombreJugador = "";
         }
 
+        public void SetNombreJugador(string Nombre)
+        {
+            this.NombreJugador = Nombre;
+        }
+
         public string GetNombreJugador()
         {
             return this.NombreJugador;

@@ -137,7 +137,7 @@ namespace TGC.Group.Model
             this.pathSonidoGolpe1 = MediaDir + "Sounds\\Golpe1.wav";
             this.pathSonidoEncendido = MediaDir + "Sounds\\Encendido.wav";
             this.pathSonidoPowerUpVida = MediaDir + "Sounds\\PowerUpVida.wav";
-            this.pathSonidoMotor = MediaDir + "Sounds\\Motor1.wav";
+            this.pathSonidoMotor = MediaDir + "Sounds\\Motor2.wav";
             this.DirectSound = directSound;
         }
 
@@ -1018,8 +1018,9 @@ namespace TGC.Group.Model
         public void ReproducirSonidoMotor()
         {
             soundMotor = new TgcStaticSound();
-            soundMotor.loadSound(pathSonidoMotor, DirectSound.DsDevice);
+            soundMotor.loadSound (pathSonidoMotor, DirectSound.DsDevice);
             soundMotor.play(true);
+            
         }
 
         public void Update(bool MoverRuedas, bool Avanzar, bool Frenar, bool Izquierda, bool Derecha, bool Saltar, float ElapsedTime, float VidaJugador)

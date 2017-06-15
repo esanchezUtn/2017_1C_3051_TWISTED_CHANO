@@ -593,13 +593,15 @@ namespace TGC.Group.Model
                     if (this.claseMenu.GetEstadoMenu() == "E")
                     {
                         this.ModoPresentacion = false;
-                        this.listaJugadores[0].ActualizarNombreJugador(this.claseMenu.GetNombreJugador());
                         this.NombreJugador1 = this.claseMenu.GetNombreJugador();
 
                         if (this.NombreJugador1.Trim() == "")
                         {
                             this.NombreJugador1 = "humano";
+                            this.claseMenu.SetNombreJugador(this.NombreJugador1);
                         }
+
+                        this.listaJugadores[0].ActualizarNombreJugador(this.NombreJugador1);
 
                         Camara = this.listaJugadores[0].claseCamara.GetCamera();
                         this.listaJugadores[0].claseAuto.ReproducirSonidoArranque();

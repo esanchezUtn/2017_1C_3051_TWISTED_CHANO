@@ -108,6 +108,7 @@ namespace TGC.Group.Model
 
         //Sonidos
         private string pathSonidoGolpe1;
+        private string pathSonidoGolpe2;
         private string pathSonidoEncendido;
         private string pathSonidoPowerUpVida;
         private string pathSonidoMotor;
@@ -135,6 +136,7 @@ namespace TGC.Group.Model
             this.MediaDir = MediaDir;
             this.colisiono = false;
             this.pathSonidoGolpe1 = MediaDir + "Sounds\\Golpe1.wav";
+            this.pathSonidoGolpe2 = MediaDir + "Sounds\\Golpe2.wav";
             this.pathSonidoEncendido = MediaDir + "Sounds\\Encendido.wav";
             this.pathSonidoPowerUpVida = MediaDir + "Sounds\\PowerUpVida.wav";
             this.pathSonidoMotor = MediaDir + "Sounds\\Motor2.wav";
@@ -1196,9 +1198,9 @@ namespace TGC.Group.Model
 
                 else
                 {
-                    loadSound(this.pathSonidoGolpe1);
+                    loadSound(this.pathSonidoGolpe2);
                     sound.play();
-                    //TODO: Reproducir sonido de un golpe fuerte
+
                 }
 
             }

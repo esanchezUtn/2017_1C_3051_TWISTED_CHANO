@@ -580,11 +580,13 @@ namespace TGC.Group.Model
             {
                 if (Input.keyPressed(Key.Up))
                 {
+                    this.ReproducirSonidoClick();
                     this.claseMenu.SetPosicionMenu(-1);
                 }
 
                 if (Input.keyPressed(Key.Down))
                 {
+                    this.ReproducirSonidoClick();
                     this.claseMenu.SetPosicionMenu(1);
                 }
 
@@ -698,6 +700,15 @@ namespace TGC.Group.Model
             this.CalcularPosicionLuzAuto();
             this.CalcularPosicionLuzAutoSalto();
 
+        }
+
+        private void ReproducirSonidoClick()
+        {
+
+            var soundClick = new TgcStaticSound();
+            soundClick.loadSound(MediaDir + "Sounds\\Click1.wav", DirectSound.DsDevice);
+            soundClick.play(false);
+            
         }
 
         public void RenderShadowMap()

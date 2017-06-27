@@ -256,6 +256,10 @@ namespace TGC.Group.Model
             TransformarMeshScenePpal(4, 3, POSICION_VERTICE);
             TransformarMeshScenePpal(5, 3, POSICION_VERTICE);
 
+            //Corrigo el Zfighting 
+            ScenePpal.Meshes.FindAll(mesh => mesh.Name.StartsWith("Plane_") || mesh.Name.StartsWith("Pasto")).ForEach(mesh => mesh.Position = new Vector3(mesh.Position.X, mesh.Position.Y + 1, mesh.Position.Z));
+            ScenePpal.Meshes.FindAll(mesh => mesh.Name.StartsWith("Agua")).ForEach(mesh => mesh.Position = new Vector3(mesh.Position.X, mesh.Position.Y + 2, mesh.Position.Z));
+
             //Crear caja para luz de PDL
             GameModel.MeshPDL = new List<TgcMesh>();
             this.luzLunaMesh = TgcBox.fromSize(new Vector3(0, 10, 0));

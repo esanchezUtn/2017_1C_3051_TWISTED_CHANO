@@ -176,7 +176,7 @@ namespace TGC.Group.Model
 
             //Movemos el auto un poco para arriba para que se pueda mover
             this.Mesh.AutoTransformEnable = true;
-            this.Mesh.move(0, 0.5f, 0);
+            this.Mesh.move(0, 1.5f, 0);
             this.Mesh.updateBoundingBox();
 
             this.ObbMesh = TgcBoundingOrientedBox.computeFromAABB(this.Mesh.BoundingBox);
@@ -523,7 +523,7 @@ namespace TGC.Group.Model
 
                 if (Mesh.Position.Y < 0.5f)
                 {
-                    Mesh.move(0, 0.5f - Mesh.Position.Y, 0);
+                    Mesh.move(0, 1.5f - Mesh.Position.Y, 0);
                     falling = false;
                 }
             }
@@ -1130,7 +1130,7 @@ namespace TGC.Group.Model
 
                 if (Mesh.Position.Y < 0.5f)
                 {
-                    Mesh.move(0, 0.5f - Mesh.Position.Y, 0);
+                    Mesh.move(0, 1.5f - Mesh.Position.Y, 0);
                     falling = false;
                 }
             }

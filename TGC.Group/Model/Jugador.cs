@@ -29,6 +29,9 @@ namespace TGC.Group.Model
         //Camara personal
         public CamaraTW claseCamara;
 
+        //HUD Velocimetro
+        private HUDVelocimetro claseHUDVelocimetro;
+
         public Jugador(string NombreJugador, string MediaDir, int NroJugador, TgcDirectSound directSound)
         {
             //Guardo variables
@@ -39,6 +42,10 @@ namespace TGC.Group.Model
             //Creo las clases de HUD y el auto
             this.claseHUD = new HUDJugador (MediaDir, this.NombreJugador, this.NroJugador);
             this.claseAuto = new Auto(MediaDir, this.NroJugador, directSound);
+            if(this.NroJugador == 0)
+            {
+                this.claseHUDVelocimetro = new HUDVelocimetro(MediaDir);
+            }
 
             return;
         }
@@ -83,6 +90,12 @@ namespace TGC.Group.Model
         public void Update(bool MoverRuedas, bool Avanzar, bool Frenar, bool Izquierda, bool Derecha, bool Saltar, float ElapsedTime)
         {
             this.claseHUD.SetVidaJugador(this.claseAuto.ModificadorVida);
+
+            if(this.GetNroJugador() == 0)
+            {
+                this.claseHUDVelocimetro.Velocidad = this.claseAuto.MOVEMENT_SPEED;
+            }
+
             this.claseAuto.ModificadorVida = 0;
             this.claseHUD.Update();
             this.claseAuto.Update(MoverRuedas, Avanzar, Frenar, Izquierda, Derecha, Saltar, ElapsedTime, this.claseHUD.GetVidaJugador());
@@ -93,6 +106,8 @@ namespace TGC.Group.Model
         {
             this.claseHUD.Render();
             this.claseAuto.Render();
+            if(this.NroJugador == 0)
+            this.claseHUDVelocimetro.Render();
             this.claseCamara.Render();
         }
 

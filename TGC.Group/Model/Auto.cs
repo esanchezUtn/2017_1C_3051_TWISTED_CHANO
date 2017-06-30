@@ -108,6 +108,7 @@ namespace TGC.Group.Model
 
         //Sonidos
         private string pathSonidoGolpe1;
+        private string pathSonidoGolpe2;
         private string pathSonidoEncendido;
         private string pathSonidoPowerUpVida;
         private string pathSonidoMotor;
@@ -135,6 +136,7 @@ namespace TGC.Group.Model
             this.MediaDir = MediaDir;
             this.colisiono = false;
             this.pathSonidoGolpe1 = MediaDir + "Sounds\\Golpe1.wav";
+            this.pathSonidoGolpe2 = MediaDir + "Sounds\\Golpe2.wav";
             this.pathSonidoEncendido = MediaDir + "Sounds\\Encendido.wav";
             this.pathSonidoPowerUpVida = MediaDir + "Sounds\\PowerUpVida.wav";
             this.pathSonidoMotor = MediaDir + "Sounds\\Motor2.wav";
@@ -174,7 +176,7 @@ namespace TGC.Group.Model
 
             //Movemos el auto un poco para arriba para que se pueda mover
             this.Mesh.AutoTransformEnable = true;
-            this.Mesh.move(0, 0.5f, 0);
+            this.Mesh.move(0, 1.5f, 0);
             this.Mesh.updateBoundingBox();
 
             this.ObbMesh = TgcBoundingOrientedBox.computeFromAABB(this.Mesh.BoundingBox);
@@ -521,7 +523,7 @@ namespace TGC.Group.Model
 
                 if (Mesh.Position.Y < 0.5f)
                 {
-                    Mesh.move(0, 0.5f - Mesh.Position.Y, 0);
+                    Mesh.move(0, 1.5f - Mesh.Position.Y, 0);
                     falling = false;
                 }
             }
@@ -1128,7 +1130,7 @@ namespace TGC.Group.Model
 
                 if (Mesh.Position.Y < 0.5f)
                 {
-                    Mesh.move(0, 0.5f - Mesh.Position.Y, 0);
+                    Mesh.move(0, 1.5f - Mesh.Position.Y, 0);
                     falling = false;
                 }
             }
@@ -1196,9 +1198,9 @@ namespace TGC.Group.Model
 
                 else
                 {
-                    loadSound(this.pathSonidoGolpe1);
+                    loadSound(this.pathSonidoGolpe2);
                     sound.play();
-                    //TODO: Reproducir sonido de un golpe fuerte
+
                 }
 
             }

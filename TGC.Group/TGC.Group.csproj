@@ -102,6 +102,7 @@
     <Compile Include="Model\HUDJugador.cs" />
     <Compile Include="Model\HUDMenu.cs" />
     <Compile Include="Model\HUDTiempo.cs" />
+    <Compile Include="Model\HUDVelocimetro.cs" />
     <Compile Include="Model\HumoParticula.cs" />
     <Compile Include="Model\Jugador.cs" />
     <Compile Include="Program.cs" />

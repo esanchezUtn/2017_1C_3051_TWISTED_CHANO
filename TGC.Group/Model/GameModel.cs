@@ -750,7 +750,7 @@ namespace TGC.Group.Model
             shadowEffect.SetValue("g_txShadow", g_pShadowMap);
 
             //Renderizo todos las sombras de todos los objetos del mapa
-            quadtree.render(Frustum, false, "RenderShadow", 0, this.shadowEffect);
+            quadtree.render(Frustum, false, "RenderShadow", 3, this.shadowEffect);
 
             //Dibujo las sombras de los jugadores
             foreach (var unJugador in this.listaJugadores)
@@ -959,10 +959,10 @@ namespace TGC.Group.Model
 
             //Dibuja un texto por pantalla
             this.RenderFPS();
-            DrawText.drawText("Con la tecla F se dibuja el bounding box.", 0, 20, Color.Red);
-            DrawText.drawText("Con la tecla F1 se cambia el tipo de camara. Pos [Actual]: " + TgcParserUtils.printVector3(Camara.Position), 0, 30, Color.Red);
-            DrawText.drawText("Direccion: " + TgcParserUtils.printVector3(listaJugadores[1].claseAuto.direccionSeguir), 0, 60, Color.Red);
-            DrawText.drawText("Direccion: " + TgcParserUtils.printVector3(listaJugadores[1].claseAuto.direccionASeguir), 0, 80, Color.Red);
+            //DrawText.drawText("Con la tecla F se dibuja el bounding box.", 0, 20, Color.Red);
+            //DrawText.drawText("Con la tecla F1 se cambia el tipo de camara. Pos [Actual]: " + TgcParserUtils.printVector3(Camara.Position), 0, 30, Color.Red);
+            //DrawText.drawText("Direccion: " + TgcParserUtils.printVector3(listaJugadores[1].claseAuto.direccionSeguir), 0, 60, Color.Red);
+            //DrawText.drawText("Direccion: " + TgcParserUtils.printVector3(listaJugadores[1].claseAuto.direccionASeguir), 0, 80, Color.Red);
 
             //Renderizo los objetos/bounding box cargados de las listas
             if (BoundingBox)

@@ -190,13 +190,13 @@ float4 PixScene(float2 Tex : TEXCOORD0,
 		//coordenada de textura CT
 		float2 CT = 0.5 * vPosLight.xy / vPosLight.w + float2(0.5, 0.5);
 		CT.y = 1.0f - CT.y;
-		
+			
 		// sin ningun aa. conviene con smap size >= 512
 		float I = (tex2D(g_samShadow, CT) + EPSILON < vPosLight.z / vPosLight.w) ? 0.0f : 1.0f;
 
 		if (cono < 0.8)
 			I *= 1 - (0.8 - cono) * 10;
-
+		
 		K = I;
 	}
 

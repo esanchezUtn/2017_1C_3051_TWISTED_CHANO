@@ -94,25 +94,32 @@ namespace TGC.UtilsGroup
                         continue;
                     else
                     {
-                        if (mesh.Enabled)
+                        if ((soloObjetos == 3) &&
+                        ( (mesh.Name == "Pasto") || (mesh.Name == "Plane_5"))
+                        )
+                            continue;
+                        else
                         {
-                            if (mesh.Name.IndexOf("PowerUp") == -1)
+                            if (mesh.Enabled)
                             {
-                                if (Technique == "")
+                                if (mesh.Name.IndexOf("PowerUp") == -1)
                                 {
-                                    mesh.Effect = TgcShaders.Instance.TgcMeshShader;
-                                    mesh.Technique = TgcShaders.Instance.getTgcMeshTechnique(mesh.RenderType);
-                                }
-                                else
-                                {
+                                    if (Technique == "")
+                                    {
+                                        mesh.Effect = TgcShaders.Instance.TgcMeshShader;
+                                        mesh.Technique = TgcShaders.Instance.getTgcMeshTechnique(mesh.RenderType);
+                                    }
+                                    else
+                                    {
 
-                                    mesh.Effect = unEfecto;
-                                    mesh.Technique = Technique;
+                                        mesh.Effect = unEfecto;
+                                        mesh.Technique = Technique;
+                                    }
                                 }
+
+                                mesh.render();
+                                mesh.Enabled = false;
                             }
-
-                            mesh.render();
-                            mesh.Enabled = false;
                         }
                     }
                 }

@@ -633,7 +633,7 @@ namespace TGC.Group.Model
             else
             {
                 //Achico el farplane para mejorar un poco los FPS
-                this.far_plane = 3000f;
+                this.far_plane = 5000f;
 
                 //Valido las teclas que se presionaron
                 if ((Input.keyDown(Key.Up) || Input.keyDown(Key.W)))

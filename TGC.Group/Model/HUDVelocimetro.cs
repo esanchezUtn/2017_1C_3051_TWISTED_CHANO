@@ -17,6 +17,7 @@ namespace TGC.Group.Model
         private TgcSprite spriteVelocimetro;
         private TgcSprite spriteAguja;
         private TgcDrawer2D drawer;
+        private Boolean visible = false;
 
         //Velocidad del auto 
         public HUDVelocimetro(string MediaDirectory)
@@ -37,21 +38,29 @@ namespace TGC.Group.Model
 
         }
 
+        public void SetVisible(Boolean visible)
+        {
+            this.visible = visible;
+        }
+
         public void Render()
         {
-            //Iniciar dibujado
-            this.drawer.beginDrawSprite();
+            if (this.visible)
+            { 
+                //Iniciar dibujado
+                this.drawer.beginDrawSprite();
 
-            //Dibujo velocimetro
-            this.spriteVelocimetro.render();
-            
-            //Aplico rotacion a la aguja y la dibujo
-            spriteAguja.Rotation = FastMath.Abs(Velocidad) / 800 * FastMath.PI / 2;
-            this.spriteAguja.render();
+                //Dibujo velocimetro
+                this.spriteVelocimetro.render();
 
-            //Finalizar el dibujado de Sprites
-            this.drawer.endDrawSprite();
-            ///////////////////////     
+                //Aplico rotacion a la aguja y la dibujo
+                spriteAguja.Rotation = FastMath.Abs(Velocidad) / 800 * FastMath.PI / 2;
+                this.spriteAguja.render();
+
+                //Finalizar el dibujado de Sprites
+                this.drawer.endDrawSprite();
+                ///////////////////////
+            }
         }
     }
 }

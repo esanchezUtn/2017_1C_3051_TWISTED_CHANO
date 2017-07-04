@@ -94,6 +94,7 @@ namespace TGC.Group.Model
             if(this.GetNroJugador() == 0)
             {
                 this.claseHUDVelocimetro.Velocidad = this.claseAuto.MOVEMENT_SPEED;
+                this.claseHUDVelocimetro.SetVisible(true);
             }
 
             this.claseAuto.ModificadorVida = 0;
@@ -106,8 +107,10 @@ namespace TGC.Group.Model
         {
             this.claseHUD.Render();
             this.claseAuto.Render();
-            if(this.NroJugador == 0)
-            this.claseHUDVelocimetro.Render();
+
+            if (this.NroJugador == 0)
+                this.claseHUDVelocimetro.Render();
+
             this.claseCamara.Render();
         }
 

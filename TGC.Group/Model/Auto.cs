@@ -1062,7 +1062,7 @@ namespace TGC.Group.Model
             var moveForward = 0f;
             var rotating = false;
             var posicionAnterior = this.Mesh.Position;
-            var ROTATION_SPEED_IA = ROTATION_SPEED * 20f;
+            var ROTATION_SPEED_IA = ROTATION_SPEED * 25f;
 
             rotate = 0;
 

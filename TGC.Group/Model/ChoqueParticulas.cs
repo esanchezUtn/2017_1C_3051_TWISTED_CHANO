@@ -10,7 +10,7 @@ namespace TGC.Group.Model
     {
         private ParticleEmitter emitter;
         private const int TIEMPO_CHOQUE = 1;
-        private const int CANTIDAD_PARTICULAS = 320;
+        private const int CANTIDAD_PARTICULAS = 620;
         private const float TAMANO_PARTICULA = 1f;
         private const float TTL_PARTICULA = 1f;
         private const float FQ_PARTICULA = 0.5f;

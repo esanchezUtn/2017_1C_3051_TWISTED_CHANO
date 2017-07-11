@@ -162,6 +162,11 @@ namespace TGC.Group.Model
         //private Texture g_pBaseTexture2;
         //private float currentMoveDirPowerUpVida = 1f;
 
+        private Texture renderTarget2D;
+        private VertexBuffer screenQuadVB;
+        private Surface depthStencil;
+        private Microsoft.DirectX.Direct3D.Effect fogEffect;
+
         public override void Init()
         {
             //Device de DirectX para crear primitivas.
@@ -170,6 +175,42 @@ namespace TGC.Group.Model
 
             //g_pBaseTexture2 = TextureLoader.FromFile(d3dDevice, MediaDir + "Textures\\stones.bmp");
             //g_pHeightmap2 = TextureLoader.FromFile(d3dDevice, MediaDir + "Textures\\NM_height_stones.tga");
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
+            /*CustomVertex.PositionTextured[] screenQuadVertices =
+            {
+                new CustomVertex.PositionTextured(-1, 1, 1, 0, 0),
+                new CustomVertex.PositionTextured(1, 1, 1, 1, 0),
+                new CustomVertex.PositionTextured(-1, -1, 1, 0, 1),
+                new CustomVertex.PositionTextured(1, -1, 1, 1, 1)
+            };
+
+            //vertex buffer de los triangulos
+            screenQuadVB = new VertexBuffer(typeof(CustomVertex.PositionTextured),
+                4, D3DDevice.Instance.Device, Usage.Dynamic | Usage.WriteOnly,
+                CustomVertex.PositionTextured.Format, Pool.Default);
+            screenQuadVB.SetData(screenQuadVertices, 0, LockFlags.None);
+
+            //Creamos un Render Targer sobre el cual se va a dibujar la pantalla
+            renderTarget2D = new Texture(D3DDevice.Instance.Device,
+                D3DDevice.Instance.Device.PresentationParameters.BackBufferWidth
+                , D3DDevice.Instance.Device.PresentationParameters.BackBufferHeight, 1, Usage.RenderTarget,
+                Format.X8R8G8B8, Pool.Default);
+
+            //Creamos un DepthStencil que debe ser compatible con nuestra definicion de renderTarget2D.
+            depthStencil =
+                D3DDevice.Instance.Device.CreateDepthStencilSurface(
+                    D3DDevice.Instance.Device.PresentationParameters.BackBufferWidth,
+                    D3DDevice.Instance.Device.PresentationParameters.BackBufferHeight,
+                    DepthFormat.D24S8, MultiSampleType.None, 0, true);
+
+            fogEffect = TgcShaders.loadEffect(MediaDir + "Shaders\\PostProcess.fx");
+            */
+            ////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
 
             ////////////////////////////////////////////////////////////////////////////////////////
             //Cargar Shader personalizado
@@ -301,12 +342,12 @@ namespace TGC.Group.Model
                 unMesh.Technique = "RenderScene";
             }
 
-            /*
-            foreach (var unJugador in this.listaJugadores)
-            {
-                unJugador.claseAuto.GetMesh().D3dMesh.ComputeNormals();
-            }
-            */
+            
+            //foreach (var unJugador in this.listaJugadores)
+            //{
+            //    unJugador.claseAuto.GetMesh().D3dMesh.ComputeNormals();
+            //}
+            
 
             //Crear Quadtree
             List<TgcMesh> listaMeshesQ = new List<TgcMesh>();
@@ -719,6 +760,13 @@ namespace TGC.Group.Model
         {
             TgcMesh unMesh;
 
+            //Valores del fog
+            shadowEffect.SetValue("StartFogDistance", 1000);
+            shadowEffect.SetValue("EndFogDistance", 15000);
+            shadowEffect.SetValue("Density", 0.0025f);
+            shadowEffect.SetValue("ColorFog", Color.Red.ToArgb());
+            shadowEffect.SetValue("CameraPos", TgcParserUtils.vector3ToFloat4Array(Camara.Position));
+
             // Calculo la matriz de view de la luz
             shadowEffect.SetValue("g_vLightPos", new Vector4(g_LightPos.X, g_LightPos.Y, g_LightPos.Z, 1));
             shadowEffect.SetValue("g_vLightDir", new Vector4(g_LightDir.X, g_LightDir.Y, g_LightDir.Z, 1));
@@ -830,6 +878,7 @@ namespace TGC.Group.Model
         {
             TgcMesh unMesh;
             Surface pOldRT, pFace;
+            //Surface pOldRT_Total, pOldDS_Total;
 
             //Habilito el render de particulas para el humo
             D3DDevice.Instance.ParticlesEnabled = true;
@@ -838,6 +887,16 @@ namespace TGC.Group.Model
             this.powerUpEffect.SetValue("time", this.TiempoRotacion);
 
             ClearTextures();
+
+            /*
+            pOldRT_Total = D3DDevice.Instance.Device.GetRenderTarget(0);
+            pOldDS_Total = D3DDevice.Instance.Device.DepthStencilSurface;
+            var pSurf = renderTarget2D.GetSurfaceLevel(0);
+            D3DDevice.Instance.Device.SetRenderTarget(0, pSurf);
+            D3DDevice.Instance.Device.DepthStencilSurface = depthStencil;
+            D3DDevice.Instance.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+            */
+
 
             #region RenderEnvMap
 
@@ -875,7 +934,7 @@ namespace TGC.Group.Model
                                 // Right
                                 Dir = new Vector3(-1, 0, 0);
                                 VUP = new Vector3(0, 1, 0);
-                                color = Color.Red;
+                                color = Color.Transparent;
                                 break;
 
                             case CubeMapFace.PositiveY:
@@ -889,21 +948,21 @@ namespace TGC.Group.Model
                                 // Down
                                 Dir = new Vector3(0, -1, 0);
                                 VUP = new Vector3(0, 0, 1);
-                                color = Color.Yellow;
+                                color = Color.Transparent;
                                 break;*/
 
                             case CubeMapFace.PositiveZ:
                                 // Front
                                 Dir = new Vector3(0, 0, 1);
                                 VUP = new Vector3(0, 1, 0);
-                                color = Color.Green;
+                                color = Color.Transparent;
                                 break;
                             
                             case CubeMapFace.NegativeZ:
                                 // Back
                                 Dir = new Vector3(0, 0, -1);
                                 VUP = new Vector3(0, 1, 0);
-                                color = Color.Blue;
+                                color = Color.Transparent;
                                 break;
 
                             default:
@@ -913,6 +972,14 @@ namespace TGC.Group.Model
                         D3DDevice.Instance.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, color, 1.0f, 0);
                         D3DDevice.Instance.Device.BeginScene();
 
+                        /*
+                        foreach (TgcMesh unMesh2 in GameModel.ScenePpal.Meshes)
+                        {
+                            unMesh2.Effect = TgcShaders.Instance.TgcMeshShader;
+                            unMesh2.Technique = TgcShaders.Instance.getTgcMeshTechnique(unMesh2.RenderType);
+                            unMesh2.render();
+                        }
+                        */
                         this.quadtree.render(Frustum, false, "", 1, null);
                         this.sphereLuna.render();
 
@@ -1026,6 +1093,38 @@ namespace TGC.Group.Model
             D3DDevice.Instance.Device.EndScene();
             #endregion
 
+            /*
+            pSurf.Dispose();
+
+            //Ahora volvemos a restaurar el Render Target original (osea dibujar a la pantalla)
+            D3DDevice.Instance.Device.SetRenderTarget(0, pOldRT_Total);
+            D3DDevice.Instance.Device.DepthStencilSurface = pOldDS_Total;
+
+            //Arrancamos la escena
+            D3DDevice.Instance.Device.BeginScene();
+
+            //Cargamos para renderizar el unico modelo que tenemos, un Quad que ocupa toda la pantalla, con la textura de todo lo dibujado antes
+            D3DDevice.Instance.Device.VertexFormat = CustomVertex.PositionTextured.Format;
+            D3DDevice.Instance.Device.SetStreamSource(0, screenQuadVB, 0);
+
+            //Ver si el efecto de oscurecer esta activado, configurar Technique del shader segun corresponda
+            fogEffect.Technique = "OndasTechnique";
+
+            //Cargamos parametros en el shader de Post-Procesado
+            fogEffect.SetValue("render_target2D", renderTarget2D);
+            fogEffect.SetValue("ondas_vertical_length", 200);
+            fogEffect.SetValue("ondas_size", 0.01f);
+
+            //Limiamos la pantalla y ejecutamos el render del shader
+            D3DDevice.Instance.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+            fogEffect.Begin(FX.None);
+            fogEffect.BeginPass(0);
+            D3DDevice.Instance.Device.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 2);
+            fogEffect.EndPass();
+            fogEffect.End();
+
+            D3DDevice.Instance.Device.EndScene();
+            */
 
             /********************************************************************************************************************************************/
             /********************************************************************************************************************************************/

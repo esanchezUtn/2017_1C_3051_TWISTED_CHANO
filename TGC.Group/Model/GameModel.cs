@@ -761,11 +761,11 @@ namespace TGC.Group.Model
             TgcMesh unMesh;
 
             //Valores del fog
-            shadowEffect.SetValue("StartFogDistance", 1000);
+           /* shadowEffect.SetValue("StartFogDistance", 1000);
             shadowEffect.SetValue("EndFogDistance", 15000);
             shadowEffect.SetValue("Density", 0.0025f);
             shadowEffect.SetValue("ColorFog", Color.Red.ToArgb());
-            shadowEffect.SetValue("CameraPos", TgcParserUtils.vector3ToFloat4Array(Camara.Position));
+            shadowEffect.SetValue("CameraPos", TgcParserUtils.vector3ToFloat4Array(Camara.Position));*/
 
             // Calculo la matriz de view de la luz
             shadowEffect.SetValue("g_vLightPos", new Vector4(g_LightPos.X, g_LightPos.Y, g_LightPos.Z, 1));
